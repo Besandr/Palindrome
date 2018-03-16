@@ -3,6 +3,11 @@ import java.util.Arrays;
 
 public class Palindrome {
     public static void main(String[] args) {
+        Palindrome pal = new Palindrome();
+        pal.go();
+    }
+
+    public void go() {
         long maxPalindrome = 0;
         long palindromeCandidate;
         long firstMaxMultiplier = 0;
@@ -12,7 +17,7 @@ public class Palindrome {
         long startTime = System.currentTimeMillis();
 
         for (int i = prestoFiveDigitNumbers.size() - 1; i >= 0 ; i--) {
-            for (int j = i - 1; j >= 0 ; j--) {
+            for (int j = i; j >= 0 ; j--) {
                 palindromeCandidate = (long) prestoFiveDigitNumbers.get(i) * prestoFiveDigitNumbers.get(j);
                 if (palindromeCandidate > maxPalindrome) {
                     if (isPalindrome(String.valueOf(palindromeCandidate))) {
@@ -26,13 +31,13 @@ public class Palindrome {
                 }
             }
         }
-        System.out.println(System.currentTimeMillis() - startTime);
-        System.out.println(maxPalindrome);
-        System.out.println(firstMaxMultiplier);
-        System.out.println(secondMaxMultiplier);
+        System.out.println("First multiplier: " + firstMaxMultiplier);
+        System.out.println("Second multiplier: " + secondMaxMultiplier);
+        System.out.println("Biggest palindrome: " + maxPalindrome);
+        System.out.println("Execution time: " + (System.currentTimeMillis() - startTime) + " ms");
     }
 
-    public static ArrayList<Integer> simpleNumbersFinderFromTo(int from, int to) {
+    public ArrayList<Integer> simpleNumbersFinderFromTo(int from, int to) {
 
         ArrayList<Integer> list = new ArrayList<>();
         boolean[] presto = new boolean[to + 1];
@@ -54,13 +59,11 @@ public class Palindrome {
         return list;
     }
 
-    public static boolean isPalindrome(String palindromeCandidate) {
-        if (palindromeCandidate.length() == 1 || palindromeCandidate.length() == 0) {
-            return true;
-        } else if (palindromeCandidate.charAt(0) == palindromeCandidate.charAt(palindromeCandidate.length() - 1)) {
-            return isPalindrome(palindromeCandidate.substring(1, palindromeCandidate.length() - 1));
-        } else {
-            return false;
-        }
+    public boolean isPalindrome(String palindromeCandidate) {
+        return palindromeCandidate.equals(
+                new StringBuilder(palindromeCandidate)
+                        .reverse()
+                        .toString()
+        );
     }
 }
